@@ -34,6 +34,9 @@ const url = require("url");
 ///////////////////////
 // SERVER
 
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObject = JSON.parse(data);
+
 const server = http.createServer((request, response) => {
   console.log(request.url);
   const pathName = request.url;
@@ -43,6 +46,11 @@ const server = http.createServer((request, response) => {
     return;
   } else if (pathName === "/product") {
     response.end("This is the PRODUCT");
+    return;
+  } else if (pathName === "/api") {
+    response.writeHead(200, { "Content-type": "application/json" });
+    response.end(data);
+
     return;
   } else {
     response.writeHead(404, {
